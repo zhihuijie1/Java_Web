@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor //lombok提供的注解，自动生成无参构造函数
 @AllArgsConstructor //lombok提供的注解，自动生成包含所有属性的构造函数。
 @TableName("tb_admin") //MyBatis-Plus提供的注解，将实体类与数据库表进行一一映射
-public class admin {
+public class Admin {
     //MyBatis-Plus提供的注解，用于指定实体类的主键属性。
     //value:哪个是主键
     //type:主键的生成策略，IdType.AUTO，表示主键由数据库自动生成。

@@ -10,15 +10,14 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName("tb_clazz")
-public class clazz {
+@TableName("tb_grade")
+public class Grade {
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
+    @TableId(value = "name", type = IdType.AUTO)
     private String name;
-    private Integer number;
-    private String introducation;
-    private String headmaster;
+    private String manager;
     private String email;
     private String telephone;
-    private String gradeName;
+    private String introducation;
 }
