@@ -6,7 +6,6 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Value;
 
 @Data //lombok提供的注解，自动提供get set toString方法
 @NoArgsConstructor //lombok提供的注解，自动生成无参构造函数
@@ -14,7 +13,8 @@ import lombok.Value;
 @TableName("tb_admin") //MyBatis-Plus提供的注解，将实体类与数据库表进行一一映射
 public class admin {
     //MyBatis-Plus提供的注解，用于指定实体类的主键属性。
-
+    //value:哪个是主键
+    //type:主键的生成策略，IdType.AUTO，表示主键由数据库自动生成。
     @TableId(value = "id",type = IdType.AUTO)
     private Integer id;
     private String name;
