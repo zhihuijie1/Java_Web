@@ -9,7 +9,6 @@ import com.chengcheng.zhihuixiaoyuan.service.StudentService;
 import com.chengcheng.zhihuixiaoyuan.service.TeacherService;
 import com.chengcheng.zhihuixiaoyuan.util.CreateVerifiCodeImage;
 import com.chengcheng.zhihuixiaoyuan.util.JwtHelper;
-import com.chengcheng.zhihuixiaoyuan.util.MD5;
 import com.chengcheng.zhihuixiaoyuan.util.Result;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,10 +36,11 @@ public class SystemController {
         BufferedImage verifiCodeImage = CreateVerifiCodeImage.getVerifiCodeImage();
         //2：拿到验证码数字
         char[] vCode = CreateVerifiCodeImage.getVerifiCode();
-        String verifiCode = vCode.toString();
+        String verifiCode = String.valueOf(vCode);
         //3：将验证码数字存放在session域中
         HttpSession session = request.getSession();
         session.setAttribute("verifiCode", verifiCode);
+        System.out.println("1session:" + verifiCode);
         //4：将验证码图片响应回浏览器中
         try {
             ImageIO.write(verifiCodeImage, "JPEG", response.getOutputStream());
@@ -68,7 +68,8 @@ public class SystemController {
         }
         //验证码错误
         if (!sessionVerfiCode.equalsIgnoreCase(loginFormVerifiCode)) {
-            return Result.fail().message("验证码输入错误，请重新输入");
+            System.out.println("2session" + sessionVerfiCode + "--" + "login" + loginFormVerifiCode);
+            return Result.fail().message("验证码输入错误，请重新输入---");
         }
         //验证码输入正确，要移除当前session中的验证码，为了安全问题。
         request.getSession().removeAttribute("verifiCode");
