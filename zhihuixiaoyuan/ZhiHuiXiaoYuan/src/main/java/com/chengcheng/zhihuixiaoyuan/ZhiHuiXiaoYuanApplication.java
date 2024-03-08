@@ -9,5 +9,4 @@ public class ZhiHuiXiaoYuanApplication {
     public static void main(String[] args) {
         SpringApplication.run(ZhiHuiXiaoYuanApplication.class, args);
     }
-
 }
