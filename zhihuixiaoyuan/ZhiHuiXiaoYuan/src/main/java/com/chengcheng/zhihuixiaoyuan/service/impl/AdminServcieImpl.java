@@ -12,4 +12,5 @@ import org.springframework.transaction.annotation.Transactional;
 //继承ServiceImpl的原因 - ServiceImpl已经实现了IService接口，所以无需自己再实现一遍。直接调用里面的CRUD方法即可。
 //ServiceImpl<AdminMapper, Admin> - 传入这两个泛型的目的 - 通过AdminMapper对Admin进行CRUD操作
 public class AdminServcieImpl extends ServiceImpl<AdminMapper, Admin> implements AdminService {
+
 }
