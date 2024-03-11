@@ -10,6 +10,7 @@ import com.chengcheng.zhihuixiaoyuan.service.TeacherService;
 import com.chengcheng.zhihuixiaoyuan.util.CreateVerifiCodeImage;
 import com.chengcheng.zhihuixiaoyuan.util.JwtHelper;
 import com.chengcheng.zhihuixiaoyuan.util.Result;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.imageio.ImageIO;
@@ -27,6 +28,13 @@ import java.util.Map;
 @RestController
 @RequestMapping("/sms/system")
 public class SystemController {
+    @Autowired
+    private AdminService adminService;
+    @Autowired
+    private TeacherService teacherService;
+    @Autowired
+    private StudentService studentService;
+
     /**
      * 生成验证码
      */
@@ -82,7 +90,7 @@ public class SystemController {
             case 1:
                 try {
                     //调用服务层的方法，根据loginForm来查询用户是否存在
-                    Admin login = AdminService.login(loginForm);
+                    Admin login = adminService.login(loginForm);
                     //用户存在
                     if (login != null) {
                         map.put("token", JwtHelper.createToken(login.getId().longValue(), 1));
@@ -96,7 +104,7 @@ public class SystemController {
                 }
             case 2:
                 try {
-                    Student login = StudentService.login(loginForm);
+                    Student login = studentService.login(loginForm);
                     if (login != null) {
                         String token = JwtHelper.createToken(Long.valueOf(login.getId()), 2);
                         map.put("token", token);
@@ -110,7 +118,7 @@ public class SystemController {
                 }
             case 3:
                 try {
-                    Teacher login = TeacherService.login(loginForm);
+                    Teacher login = teacherService.login(loginForm);
                     if (login != null) {
                         String token = JwtHelper.createToken(Long.valueOf(login.getId()), 3);
                         map.put("token", token);
