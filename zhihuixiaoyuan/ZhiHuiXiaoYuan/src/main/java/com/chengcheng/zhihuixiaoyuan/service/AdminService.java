@@ -8,5 +8,7 @@ import com.chengcheng.zhihuixiaoyuan.pojo.LoginForm;
 //将Admin作为泛型传入-可以精准的确定CRUD的对象是Admin实体类
 public interface AdminService extends IService<Admin> {
     Admin login(LoginForm loginForm);
+
+    Admin findUserByID(int userId);
 }
 

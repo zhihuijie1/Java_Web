@@ -29,7 +29,7 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
 
     @Override
     public Admin getAdminById(Long userId) {
-        QueryWrapper<Admin> queryWrapper=new QueryWrapper<Admin>();
+        QueryWrapper<Admin> queryWrapper=new QueryWrapper<>();
         queryWrapper.eq("id",userId);
         return baseMapper.selectOne(queryWrapper);
     }

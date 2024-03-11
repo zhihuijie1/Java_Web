@@ -3,14 +3,31 @@ package com.chengcheng.zhihuixiaoyuan.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.chengcheng.zhihuixiaoyuan.mapper.TeacherMapper;
+import com.chengcheng.zhihuixiaoyuan.pojo.Admin;
 import com.chengcheng.zhihuixiaoyuan.pojo.LoginForm;
 import com.chengcheng.zhihuixiaoyuan.pojo.Teacher;
 import com.chengcheng.zhihuixiaoyuan.service.TeacherService;
+import com.chengcheng.zhihuixiaoyuan.util.MD5;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+@Service("TeacherServiceImpl")
+@Transactional
 public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> implements TeacherService {
     @Override
     public Teacher login(LoginForm loginForm) {
-        Teacher teacher = baseMapper.selectOne(new QueryWrapper<Teacher>().eq("name",loginForm.getUserName()).eq("password",loginForm.getPassWord()));
+        QueryWrapper<Teacher> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("name", loginForm.getUsername());
+        queryWrapper.eq("password", MD5.encrypt(loginForm.getPassword()));
+        Teacher teacher = baseMapper.selectOne(queryWrapper);
+        return teacher;
+    }
+
+    @Override
+    public Teacher findUserByID(int userId) {
+        QueryWrapper<Teacher> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("id", userId);
+        Teacher teacher = baseMapper.selectOne(queryWrapper);
         return teacher;
     }
 }

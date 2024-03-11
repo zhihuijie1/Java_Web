@@ -12,8 +12,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LoginForm {
-    private String userName;
-    private String passWord;
+    //前端的映射名称一定要与后端一模一样  一一对应
+    private String username;
+    private String password;
     private String verifiCode;
     private Integer userType;
 }

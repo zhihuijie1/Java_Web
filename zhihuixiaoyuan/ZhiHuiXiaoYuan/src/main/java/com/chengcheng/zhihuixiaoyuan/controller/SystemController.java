@@ -1,5 +1,6 @@
 package com.chengcheng.zhihuixiaoyuan.controller;
 
+import com.baomidou.mybatisplus.extension.api.R;
 import com.chengcheng.zhihuixiaoyuan.pojo.Admin;
 import com.chengcheng.zhihuixiaoyuan.pojo.LoginForm;
 import com.chengcheng.zhihuixiaoyuan.pojo.Student;
@@ -10,6 +11,8 @@ import com.chengcheng.zhihuixiaoyuan.service.TeacherService;
 import com.chengcheng.zhihuixiaoyuan.util.CreateVerifiCodeImage;
 import com.chengcheng.zhihuixiaoyuan.util.JwtHelper;
 import com.chengcheng.zhihuixiaoyuan.util.Result;
+import com.chengcheng.zhihuixiaoyuan.util.ResultCodeEnum;
+import javafx.embed.swt.SWTFXUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,9 +34,9 @@ public class SystemController {
     @Autowired
     private AdminService adminService;
     @Autowired
-    private TeacherService teacherService;
-    @Autowired
     private StudentService studentService;
+    @Autowired
+    private TeacherService teacherService;
 
     /**
      * 生成验证码
@@ -58,7 +61,7 @@ public class SystemController {
     }
 
     /**
-     * 登录
+     * 登录验证
      */
     //1 先校验一下验证码是否正确
     //2 选择的是哪个角色
@@ -66,6 +69,7 @@ public class SystemController {
     //  比对成功的话就以token的形式返回
     @PostMapping("/login")
     public Result login(@RequestBody LoginForm loginForm, HttpServletRequest request) {
+        System.out.println(loginForm.getUsername() + loginForm.getPassword() + loginForm.getUserType() + loginForm.getVerifiCode());
         //1 先校验一下验证码是否正确
         //前端输入的验证码与session中的验证码进行比对
         String loginFormVerifiCode = loginForm.getVerifiCode();
@@ -81,7 +85,6 @@ public class SystemController {
         }
         //验证码输入正确，要移除当前session中的验证码，为了安全问题。
         request.getSession().removeAttribute("verifiCode");
-
         //2 选择的是哪个角色
         //3 在对应的角色下进行用户名与密码的比对
         //4 比对成功的话就以token的形式返回
@@ -134,7 +137,48 @@ public class SystemController {
         return Result.fail().message("无此用户");
     }
 
-}
+    @GetMapping("/getInfo")
+    public Result getInfo(@RequestHeader("token") String token) {
+        //1:根据请求头中的token来找到这个对象
+        //2:返回usertype
+        //3:返回admin对象
 
-//1 为什么没有new Result就可以直接使用Result对象 -- 里面的方法是静态方法
-//
+        //1:检查token是否过期
+        boolean expiration = JwtHelper.isExpiration(token);
+        if (expiration) {
+            return Result.build(null, ResultCodeEnum.TOKEN_ERROR);
+        }
+        //2:根据token中的type来查找对象
+        Map<String, Object> map = new HashMap<>();
+        switch (JwtHelper.getUserType(token)) {
+            case 1:
+                //3:找到这个对象，并返回对象与userType
+                Admin admin = adminService.findUserByID(JwtHelper.getUserId(token).intValue());
+                if (admin == null) {
+                    return Result.fail(null);
+                }
+                map.put("userType", 1);
+                map.put("user", admin);
+                return Result.ok(map);
+            case 2:
+                //3:找到这个对象，并返回对象与userType
+                Student student = studentService.findUserByID(JwtHelper.getUserId(token).intValue());
+                if (student == null) {
+                    return Result.fail(null);
+                }
+                map.put("userType", 2);
+                map.put("user", student);
+                return Result.ok(map);
+            case 3:
+                //3:找到这个对象，并返回对象与userType
+                Teacher teacher = teacherService.findUserByID(JwtHelper.getUserId(token).intValue());
+                if (teacher == null) {
+                    return Result.fail(null);
+                }
+                map.put("userType", 3);
+                map.put("user", teacher);
+                return Result.ok(map);
+        }
+        return Result.fail().message("无此用户");
+    }
+}

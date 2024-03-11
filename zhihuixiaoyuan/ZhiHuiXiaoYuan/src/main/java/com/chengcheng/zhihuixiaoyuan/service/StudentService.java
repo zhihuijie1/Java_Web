@@ -6,4 +6,6 @@ import com.chengcheng.zhihuixiaoyuan.pojo.Student;
 
 public interface StudentService extends IService<Student> {
     Student login(LoginForm loginForm);
+
+    Student findUserByID(int i);
 }
