@@ -5,7 +5,5 @@ import com.chengcheng.zhihuixiaoyuan.pojo.LoginForm;
 import com.chengcheng.zhihuixiaoyuan.pojo.Teacher;
 
 public interface TeacherService extends IService<Teacher> {
-    static Teacher login(LoginForm loginForm) {
-        return null;
-    }
+    Teacher login(LoginForm loginForm);
 }

@@ -68,7 +68,7 @@ public class SystemController {
         }
         //验证码错误
         if (!sessionVerfiCode.equalsIgnoreCase(loginFormVerifiCode)) {
-            System.out.println("2session" + sessionVerfiCode + "--" + "login" + loginFormVerifiCode);
+            //System.out.println("2session" + sessionVerfiCode + "--" + "login" + loginFormVerifiCode);
             return Result.fail().message("验证码输入错误，请重新输入---");
         }
         //验证码输入正确，要移除当前session中的验证码，为了安全问题。

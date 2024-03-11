@@ -5,7 +5,5 @@ import com.chengcheng.zhihuixiaoyuan.pojo.LoginForm;
 import com.chengcheng.zhihuixiaoyuan.pojo.Student;
 
 public interface StudentService extends IService<Student> {
-    static Student login(LoginForm loginForm) {
-        return null;
-    }
+    Student login(LoginForm loginForm);
 }
