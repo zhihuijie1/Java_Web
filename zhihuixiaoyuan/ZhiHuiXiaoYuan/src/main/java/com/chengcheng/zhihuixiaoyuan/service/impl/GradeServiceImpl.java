@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.util.StringUtils;
 
+import java.util.List;
+
 @Service("GradeServiceImpl")
 @Transactional
 public class GradeServiceImpl extends ServiceImpl<GradeMapper, Grade> implements GradeService {
@@ -21,7 +23,6 @@ public class GradeServiceImpl extends ServiceImpl<GradeMapper, Grade> implements
         QueryWrapper<Grade> queryWrapper = new QueryWrapper<>();
         if(!StringUtils.isEmpty(gradeName)){
             queryWrapper.like("name", gradeName);
-            System.out.println(gradeName);
         }
         //设置排序规则
         queryWrapper.orderByDesc("id");

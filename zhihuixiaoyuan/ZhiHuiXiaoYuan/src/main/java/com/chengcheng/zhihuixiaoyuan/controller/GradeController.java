@@ -1,6 +1,7 @@
 package com.chengcheng.zhihuixiaoyuan.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.chengcheng.zhihuixiaoyuan.pojo.Grade;
 import com.chengcheng.zhihuixiaoyuan.service.GradeService;
@@ -9,6 +10,8 @@ import com.sun.org.apache.regexp.internal.RE;
 import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/sms/gradeController")
@@ -30,5 +33,17 @@ public class GradeController {
         //IPage对象不仅包含当前页的数据列表，还包含总记录数、总页数等分页相关的信息，这对于在客户端实现分页显示非常有用。
         IPage<Grade> pageRs = gradeService.getGradeByOpr(page, gradeName);
         return Result.ok(pageRs);
+    }
+
+    @PostMapping("/saveOrUpdateGrade")
+    public Result saveOrUpdateGrade(@RequestBody Grade grade) {
+        gradeService.saveOrUpdate(grade);//系统中自带的
+        return Result.ok();
+    }
+
+    @DeleteMapping("/deleteGrade")
+    public Result deleteGrade(@RequestBody List<Integer> ids) {
+        gradeService.removeByIds(ids);
+        return Result.ok();
     }
 }
