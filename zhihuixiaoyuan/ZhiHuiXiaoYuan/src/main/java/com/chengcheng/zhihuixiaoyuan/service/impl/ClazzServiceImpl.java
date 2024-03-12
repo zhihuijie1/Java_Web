@@ -7,14 +7,21 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.chengcheng.zhihuixiaoyuan.mapper.ClazzMapper;
 import com.chengcheng.zhihuixiaoyuan.pojo.Clazz;
 import com.chengcheng.zhihuixiaoyuan.service.ClazzService;
-import com.mysql.cj.util.StringUtils;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.thymeleaf.util.StringUtils;
 
+@Service("ClazzServiceImpl")
+@Transactional
 public class ClazzServiceImpl extends ServiceImpl<ClazzMapper, Clazz> implements ClazzService {
     @Override
-    public IPage<Clazz> getClazz(Page<Clazz> page, String name) {
+    public IPage<Clazz> getClazz(Page<Clazz> page, String gradeName, String name) {
         QueryWrapper queryWrapper = new QueryWrapper();
-        if (!StringUtils.isNullOrEmpty(name)) {
+        if (!StringUtils.isEmpty(name)) {
             queryWrapper.like("name", name);
+        }
+        if (!StringUtils.isEmpty(gradeName)) {
+            queryWrapper.like("gradeName", gradeName);
         }
         queryWrapper.orderByDesc("id");
         queryWrapper.orderByAsc("name");

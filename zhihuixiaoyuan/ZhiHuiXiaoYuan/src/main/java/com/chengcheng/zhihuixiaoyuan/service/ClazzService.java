@@ -6,6 +6,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.chengcheng.zhihuixiaoyuan.pojo.Clazz;
 
 public interface ClazzService extends IService<Clazz> {
-    IPage<Clazz> getClazz(Page<Clazz> page, String name);
-
+    IPage<Clazz> getClazz(Page<Clazz> page, String gradeName, String name);
 }

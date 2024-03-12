@@ -1,6 +1,5 @@
 package com.chengcheng.zhihuixiaoyuan.controller;
 
-import com.baomidou.mybatisplus.extension.api.R;
 import com.chengcheng.zhihuixiaoyuan.pojo.Admin;
 import com.chengcheng.zhihuixiaoyuan.pojo.LoginForm;
 import com.chengcheng.zhihuixiaoyuan.pojo.Student;
@@ -12,7 +11,6 @@ import com.chengcheng.zhihuixiaoyuan.util.CreateVerifiCodeImage;
 import com.chengcheng.zhihuixiaoyuan.util.JwtHelper;
 import com.chengcheng.zhihuixiaoyuan.util.Result;
 import com.chengcheng.zhihuixiaoyuan.util.ResultCodeEnum;
-import javafx.embed.swt.SWTFXUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

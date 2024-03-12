@@ -15,12 +15,16 @@ public class ClazzController {
     @Autowired
     ClazzService clazzService;
 
-    //sms/clazzController/getClazzsByOpr/1/3?name=asd+
     @GetMapping("/getClazzsByOpr/{pageNo}/{pageSize}")
-    public Result getClazzsByOpr(@PathVariable(value = "pageNo") Integer pageNo, @PathVariable(value = "pageSize") Integer pageSize, @RequestParam(value = "name") String name) {
+    public Result getClazzsByOpr(@PathVariable(value = "pageNo") Integer pageNo, @PathVariable(value = "pageSize") Integer pageSize, @RequestParam(value = "gradeName", required = false) String gradeName, @RequestParam(value = "name", required = false) String name) {
         Page<Clazz> page = new Page<>(pageNo, pageSize);
-        IPage<Clazz> iPage = clazzService.getClazz(page, name);
+        IPage<Clazz> iPage = clazzService.getClazz(page, gradeName, name);
         return Result.ok(iPage);
     }
 
+    @PostMapping("/saveOrUpdateClazz")
+    public Result saveOrUpdateClazz(@RequestBody Clazz clazz) {
+        clazzService.saveOrUpdate(clazz);
+        return Result.ok();
+    }
 }
