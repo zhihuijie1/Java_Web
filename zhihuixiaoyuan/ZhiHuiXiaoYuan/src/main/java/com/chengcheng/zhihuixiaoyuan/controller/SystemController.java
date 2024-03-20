@@ -13,15 +13,18 @@ import com.chengcheng.zhihuixiaoyuan.util.Result;
 import com.chengcheng.zhihuixiaoyuan.util.ResultCodeEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * 前端公共的请求放在这里处理
@@ -178,5 +181,23 @@ public class SystemController {
                 return Result.ok(map);
         }
         return Result.fail().message("无此用户");
+    }
+
+    @PostMapping("/headerImgUpload")
+    public Result headerImgUpload(@RequestPart("multipartFile")MultipartFile multipartFile) {
+        //使用UUID随机生成文件名
+        String uuid = UUID.randomUUID().toString().replace("-", "").toLowerCase();
+        //生成新的文件名字
+        String filename = uuid.concat(multipartFile.getOriginalFilename());
+        //生成文件的保存路径(实际生产环境这里会使用真正的文件存储服务器)
+        String portraitPath ="E:\\Java_Web\\zhihuixiaoyuan\\ZhiHuiXiaoYuan\\target\\classes\\public\\upload\\".concat(filename);
+        //保存文件
+        try {
+            multipartFile.transferTo(new File(portraitPath));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String headerImg ="upload/"+filename;
+        return Result.ok(headerImg);
     }
 }

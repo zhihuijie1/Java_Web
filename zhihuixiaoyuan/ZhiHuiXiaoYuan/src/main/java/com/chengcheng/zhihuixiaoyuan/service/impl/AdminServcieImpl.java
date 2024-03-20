@@ -1,6 +1,8 @@
 package com.chengcheng.zhihuixiaoyuan.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.chengcheng.zhihuixiaoyuan.mapper.AdminMapper;
 import com.chengcheng.zhihuixiaoyuan.pojo.Admin;
@@ -9,6 +11,7 @@ import com.chengcheng.zhihuixiaoyuan.service.AdminService;
 import com.chengcheng.zhihuixiaoyuan.util.MD5;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.thymeleaf.util.StringUtils;
 
 import java.sql.SQLOutput;
 
@@ -39,5 +42,17 @@ public class AdminServcieImpl extends ServiceImpl<AdminMapper, Admin> implements
         queryWrapper.eq("id",userId);
         Admin admin = baseMapper.selectOne(queryWrapper);
         return admin;
+    }
+
+    @Override
+    public IPage<Admin> getAdmins(Page<Admin> page, String adminName) {
+        QueryWrapper queryWrapper = new QueryWrapper();
+        if(!StringUtils.isEmpty(adminName)) {
+            queryWrapper.like("name",adminName);
+        }
+        queryWrapper.orderByDesc("id");
+        queryWrapper.orderByAsc("name");
+        Page page1 = baseMapper.selectPage(page, queryWrapper);
+        return page1;
     }
 }

@@ -40,8 +40,8 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> impl
         if (!StringUtils.isEmpty(name)) {
             queryWrapper.like("name", name);
         }
-        if(!StringUtils.isEmpty(clazzName)) {
-            queryWrapper.eq("clazz_name",clazzName);
+        if (!StringUtils.isEmpty(clazzName)) {
+            queryWrapper.eq("clazz_name", clazzName);
         }
         queryWrapper.orderByDesc("id");
         queryWrapper.orderByAsc("name");
