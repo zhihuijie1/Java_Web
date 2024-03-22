@@ -1,7 +1,7 @@
 后端启动redis的指令
 
 ```shell
-redis-server /home/terrychen/redis-conf
+    redis-server /home/terrychen/redis-conf
 ```
 
 用这个指令来擦看redis运行的进程
