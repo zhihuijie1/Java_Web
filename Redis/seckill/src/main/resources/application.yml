@@ -3,53 +3,49 @@ thymeleaf:
 
 
 # 数据库连接配置
-datasource:
-  # 使用的JDBC驱动类名称，这里指定的是MySQL的JDBC驱动
-  driver-class-name: com.mysql.cj.jdbc.Driver
-  # 数据库的JDBC连接URL，包含数据库的类型、主机地址、端口、数据库实例名和一些连接参数
-  url: jdbc:mysql://localhost:3306/seckill?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
-  # 数据库连接的用户名
-  username: chengcheng
-  # 数据库连接的密码
-  password: 123456
-  # HikariCP连接池的配置
-  hikari:
-    # 连接池的名称，便于在监控等场景中识别
-    pool-name: DateHikariCP
-    # 连接池中维护的最小空闲连接数
-    minimum-idle: 5
-    # 连接空闲的最大时间（毫秒），超过这个时间未使用的连接会被释放
-    idle-timeout: 1800000
-    # 连接池中允许的最大连接数
-    maximum-pool-size: 10
-    # 是否自动提交事务，对于使用事务控制的应用，应该关闭它，让应用程序控制事务
-    auto-commit: true
-    # 连接的最大生命周期（毫秒），超过这个时间的连接将被释放，避免连接泄漏
-    max-lifetime: 1800000
-    # 获取连接时的最大等待时间（毫秒），超时将抛出异常
-    connection-timeout: 3000
-    # 测试连接是否可用的查询语句，用于验证来自池的连接
-    connection-test-query: SELECT 1
+spring:
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/seckill?characterEncoding=utf-8&serverTimezone=GMT%2B8&userSSL=false
+    username: chengcheng
+    password: 171612cgj
+    hikari:
+      username: DateHikariCP
+      minimum-idle: 5
+      # 连接空闲的最大时间（毫秒），超过这个时间未使用的连接会被释放
+      idle-timeout: 1800000
+      # 连接池中允许的最大连接数
+      maximum-pool-size: 10
+      # 是否自动提交事务，对于使用事务控制的应用，应该关闭它，让应用程序控制事务
+      auto-commit: true
+      # 连接的最大生命周期（毫秒），超过这个时间的连接将被释放，避免连接泄漏
+      max-lifetime: 1800000
+      # 获取连接时的最大等待时间（毫秒），超时将抛出异常
+      connection-timeout: 3000
+      # 测试连接是否可用的查询语句，用于验证来自池的连接
+      connection-test-query: SELECT 1
 
   #建立数据库连接是一个开销较大的操作，包括网络通信、身份验证等步骤。连接池通过重用现有的连接，避免了这些开销，从而加快了操作的执行速度。
   #举例：假设一个网站，每次用户请求都需要查询数据库。如果不使用连接池，那么每个请求都需要重新建立连接，
   #导致响应速度变慢，用户体验下降。使用连接池后，可以快速从池中获取已经建立的连接，提高了请求的处理速度。
 
 
-  redis:
-    host: 127.0.0.1
-    port: 6379
-    #    password: 123123
-    database: 0
-    timeout: 10000ms
-    lettuce:
-      pool:
-        #最大连接数 默认8
-        max-active: 8
-        #最大连接阻塞时间
-        max-wait: 1000ms
-        #最大空闲连接，默认8
-        max-idle: 200
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379
+      #    password: 123123
+      database: 0
+      timeout: 10000ms
+      lettuce:
+        pool:
+          #最大连接数 默认8
+          max-active: 8
+          #最大连接阻塞时间
+          max-wait: 1000ms
+          #最大空闲连接，默认8
+          max-idle: 200
 
 
 
@@ -88,6 +84,7 @@ datasource:
         max-interval: 10000ms
         #重试的间隔乘数，比如配2。0  第一等10s 第二次等20s 第三次等40s
         multiplier: 1
+
 
 
 #mybatis-plus
