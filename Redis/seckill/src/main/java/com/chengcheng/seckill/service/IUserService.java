@@ -2,6 +2,10 @@ package com.chengcheng.seckill.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.chengcheng.seckill.pojo.User;
+import com.chengcheng.seckill.utils.Result;
+import com.chengcheng.seckill.vo.LoginVo;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 /**
  * <p>
@@ -13,4 +17,5 @@ import com.chengcheng.seckill.pojo.User;
  */
 public interface IUserService extends IService<User> {
 
+    Result doLogin(LoginVo loginVo, HttpServletRequest request, HttpServletResponse response);
 }
