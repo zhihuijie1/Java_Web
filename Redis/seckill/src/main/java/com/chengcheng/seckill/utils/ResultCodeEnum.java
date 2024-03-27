@@ -36,7 +36,9 @@ public enum ResultCodeEnum {
     //2022-02-22
     LOGIN_CODE(222,"长时间未操作,会话已失效,请刷新页面后重试!"),
     CODE_ERROR(223,"验证码错误!"),
-    TOKEN_ERROR(224,"Token无效!")
+    TOKEN_ERROR(224,"Token无效!"),
+
+    MOBILE_ERROR(225,"手机格式错误")
     ;
 
     private Integer code;

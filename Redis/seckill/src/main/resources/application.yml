@@ -1,17 +1,15 @@
 thymeleaf:
   cache: false
 
-
-# 数据库连接配置
 spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/seckill?characterEncoding=utf-8&serverTimezone=GMT%2B8&userSSL=false
     username: chengcheng
     password: 171612cgj
+    # com.mysql.cj.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
-      username: DateHikariCP
       minimum-idle: 5
       # 连接空闲的最大时间（毫秒），超过这个时间未使用的连接会被释放
       idle-timeout: 1800000
@@ -26,82 +24,27 @@ spring:
       # 测试连接是否可用的查询语句，用于验证来自池的连接
       connection-test-query: SELECT 1
 
-  #建立数据库连接是一个开销较大的操作，包括网络通信、身份验证等步骤。连接池通过重用现有的连接，避免了这些开销，从而加快了操作的执行速度。
-  #举例：假设一个网站，每次用户请求都需要查询数据库。如果不使用连接池，那么每个请求都需要重新建立连接，
-  #导致响应速度变慢，用户体验下降。使用连接池后，可以快速从池中获取已经建立的连接，提高了请求的处理速度。
-
-
-  data:
-    redis:
-      host: 127.0.0.1
-      port: 6379
-      #    password: 123123
-      database: 0
-      timeout: 10000ms
-      lettuce:
-        pool:
-          #最大连接数 默认8
-          max-active: 8
-          #最大连接阻塞时间
-          max-wait: 1000ms
-          #最大空闲连接，默认8
-          max-idle: 200
-
-
-
-  rabbitmq:
-    #服务器
-    host: 127.0.0.1
-    #用户名
-    username: itcast
-    #密码
-    password: 123123
-    #虚拟主机
-    virtual-host: /
-    #端口
-    port: 5672
-    listener:
-      simple:
-        #消费者最小数量
-        concurrency: 10
-        #消费者最大数量
-        max-concurrency: 10
-        #限制消费者每次只能处理一条消息，处理完在继续下一条消息
-        prefetch: 1
-        #启动是默认启动容器
-        auto-startup: true
-        #被拒绝时重新进入队列
-        default-requeue-rejected: true
-    template:
-      retry:
-        #发布重试，默认false
-        enabled: true
-        #重试时间，默认1000ms
-        initial-interval: 1000ms
-        #重试最大次数，默认3次
-        max-attempts: 3
-        #最大重试间隔时间
-        max-interval: 10000ms
-        #重试的间隔乘数，比如配2。0  第一等10s 第二次等20s 第三次等40s
-        multiplier: 1
-
-
+      #建立数据库连接是一个开销较大的操作，包括网络通信、身份验证等步骤。连接池通过重用现有的连接，避免了这些开销，从而加快了操作的执行速度。
+      #举例：假设一个网站，每次用户请求都需要查询数据库。如果不使用连接池，那么每个请求都需要重新建立连接，
+      #导致响应速度变慢，用户体验下降。使用连接池后，可以快速从池中获取已经建立的连接，提高了请求的处理速度。
 
 #mybatis-plus
 mybatis-plus:
+    mapper-locations: classpath*:/mapper/*Mapper.xml
+    type-aliases-package: com.chengcheng.seckill.pojo
   #指定mapper映射文件的位置
   #MyBatis-Plus将会扫描项目的所有classpath路径下的mapper目录，
   #加载所有以Mapper.xml结尾的文件。这些XML文件中定义了数据库操作的SQL语句和映射规则，是实现数据访问逻辑的关键。
-  mapper-locations: classpath*:/mapper/*Mapper.xml
+  # mapper-locations: classpath*:/mapper/**/*.xml
   #MyBatis-Plus会自动扫描这个包下的类，并注册为别名。这样在Mapper XML文件中就可以使用类名而不是完整的包名来引用这些类了，
   #大大提高了配置文件的可读性和简洁性。例如，在上述配置中，com.chengcheng.seckill.pojo包下的所有类都会被自动注册为别名，
   #如果这个包下有一个User类，那么在Mapper XML中就可以直接使用User来引用这个类，而不需要写成com.chengcheng.seckill.pojo.User。
-  type-aliases-package: com.chengcheng.seckill.mapper
+  # type-aliases-package: com.chengcheng.seckill.pojo
 
-# mybatis SQL打印
-logging:
-  level:
-    com.chengcheng.sekill.mapper: debug
-    #com.chengcheng.sekill.mapper指定的是一个包路径，而debug是日志级别。
-    #这意味着，所有com.chengcheng.sekill.mapper包下（及其子包）的类在运行时产生的日志，
-    #如果它们的级别是debug或更高级别（如error），这些日志信息将被输出。
+  # mybatis SQL打印
+
+      #com.chengcheng.sekill.mapper指定的是一个包路径，而debug是日志级别。
+      #这意味着，所有com.chengcheng.sekill.mapper包下（及其子包）的类在运行时产生的日志，
+      #如果它们的级别是debug或更高级别（如error），这些日志信息将被输出。
+
+      #classpath:/mappers/*.xml

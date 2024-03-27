@@ -6,21 +6,14 @@ import lombok.EqualsAndHashCode;
 
 import java.time.LocalDateTime;
 
-/**
- * <p>
- * 
- * </p>
- *
- * @author jobob
- * @since 2024-03-25
- */
 @Data
-@EqualsAndHashCode(callSuper = false)
+//@EqualsAndHashCode(callSuper = false)
 @TableName("t_user")
 public class User {
 
-    private static final long serialVersionUID = 1L;
+    //private static final long serialVersionUID = 1L;
 
+    private long id;
     private String nickname;
 
     /**

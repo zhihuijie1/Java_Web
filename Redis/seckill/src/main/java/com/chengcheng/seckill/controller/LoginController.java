@@ -2,9 +2,8 @@ package com.chengcheng.seckill.controller;
 
 import com.chengcheng.seckill.service.IUserService;
 import com.chengcheng.seckill.utils.Result;
+import com.chengcheng.seckill.utils.ResultCodeEnum;
 import com.chengcheng.seckill.vo.LoginVo;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.io.Serializable;
 
 @Controller
 @RequestMapping("/login")
@@ -34,7 +35,8 @@ public class LoginController {
      */
     @RequestMapping("/doLogin")
     @ResponseBody
-    public Result doLogin(LoginVo loginVo, HttpServletRequest request, HttpServletResponse response) {
-        return Result.ok(iUserService.doLogin(loginVo, request, response));
+    public Result doLogin(LoginVo loginVo) {
+        Result result = iUserService.doLogin(loginVo);
+        return result;
     }
 }
