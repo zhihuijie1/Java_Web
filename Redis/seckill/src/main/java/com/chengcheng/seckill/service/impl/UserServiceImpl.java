@@ -28,8 +28,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         //先把手机号码，密码拿出来
         String mobile = loginVo.getMobile();
         String password = loginVo.getPassword();
+        //-----------------------------  begin -----------------------------
+        //对手机号码的校验可以写一个自己的注解，这样有更好的通用性。
         //判空
-        if(StringUtils.isEmpty(mobile) || StringUtils.isEmpty(password)) {
+        /*if(StringUtils.isEmpty(mobile) || StringUtils.isEmpty(password)) {
             return Result.fail(ResultCodeEnum.LOGIN_ERROR);
         }
         System.out.println("-----------null");
@@ -38,7 +40,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         if(!Validator.isMobile(mobile)) {
             return Result.fail(ResultCodeEnum.MOBILE_ERROR);
         }
-        System.out.println("-----------ismobile");
+        System.out.println("-----------ismobile");*/
+        //-----------------------------  end -----------------------------
+
         //根据手机号码从数据库取出对应的用户
         User user = userMapper.selectById(mobile);
         System.out.println("test");

@@ -7,6 +7,7 @@ import com.chengcheng.seckill.vo.LoginVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,7 +36,7 @@ public class LoginController {
      */
     @RequestMapping("/doLogin")
     @ResponseBody
-    public Result doLogin(LoginVo loginVo) {
+    public Result doLogin(@Validated LoginVo loginVo) { //@Validated -- 会自动检查传入参数中信息是否正确
         Result result = iUserService.doLogin(loginVo);
         return result;
     }
